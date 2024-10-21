@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, TextInput, Text, Image, TouchableOpacity, Button, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -7,8 +7,8 @@ import emailjs from '@emailjs/browser';
 import logo from "../../assets/login.png";
 import eye from "../../assets/eye.png";
 import hidden from "../../assets/Vector.png";
+import styles from './petterRegisterStyles';
 
-import styles from './PetterRegisterStyles';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -77,7 +77,7 @@ const PetterRegister = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
       <Formik
         initialValues={{ name: "", lastName: "", email: "", password: "", confirmPassword: "" }}
@@ -93,7 +93,8 @@ const PetterRegister = () => {
               onBlur={handleBlur('name')}
               value={values.name}
             />
-            {touched.name && errors.name && <Text style={styles.error}>{errors.name}</Text>}
+             {touched.name && errors.name && 
+             <Text style={styles.error}>{errors.name}</Text>}
 
             <TextInput
               style={styles.input}
@@ -111,7 +112,8 @@ const PetterRegister = () => {
               onBlur={handleBlur('email')}
               value={values.email}
             />
-            {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+            {touched.email && errors.email && 
+            <Text style={styles.error}>{errors.email}</Text>}
 
             <View style={styles.passwordContainer}>
               <TextInput
@@ -126,7 +128,8 @@ const PetterRegister = () => {
                 <Image source={passwordVisible ? eye : hidden} style={styles.icon} />
               </TouchableOpacity>
             </View>
-            {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
+            {touched.password && errors.password &&
+            <Text style={styles.error}>{errors.password}</Text>}
 
             <View style={styles.passwordContainer}>
               <TextInput
@@ -143,13 +146,15 @@ const PetterRegister = () => {
             </View>
             {touched.confirmPassword && errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword}</Text>}
 
-            <Button title="Registrarme" onPress={handleSubmit} />
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={styles.buttonText}>Registrarme</Text>
+            </TouchableOpacity>
           </View>
         )}
       </Formik>
-    </ScrollView>
+    </View>
+
   );
 };
 
 export default PetterRegister;
-        

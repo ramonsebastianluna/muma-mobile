@@ -14,9 +14,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 70,
-    height: 70,
-    marginBottom: 20,
+    width: 106.67,
+    height: 99,
+    marginTop: 120,
+    marginBottom: 50,
   },
 
   inputGroup: {
