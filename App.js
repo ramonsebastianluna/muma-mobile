@@ -2,12 +2,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './pages/SplashScreen';
 import StartedScreen from './pages/StartedScreen';
+import Login from './auth/Login';  
+import SelectUser from './pages/SelectUser';
+
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return (
-
+    
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
@@ -32,6 +35,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
-    
+
   );
 }
