@@ -6,6 +6,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './auth/Login';  
+import SelectUser from './pages/SelectUser';
+
 import 'react-native-gesture-handler';
 
 
@@ -22,7 +24,10 @@ export default function App() {
             component={Login}
             options={{ headerShown: false }}
           />
-    
+         <Stack.Screen 
+             name="SelectUser" 
+             component={SelectUser}
+             options={{ headerShown: false }} />  
         </Stack.Navigator>
       </NavigationContainer>
   );
