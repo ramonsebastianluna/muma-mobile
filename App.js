@@ -4,6 +4,7 @@ import SplashScreen from './pages/SplashScreen';
 import StartedScreen from './pages/StartedScreen';
 import Login from './auth/Login';  
 import SelectUser from './pages/SelectUser';
+import PetterRegister from './pages/PetterRegister';
 
 
 export default function App() {
@@ -31,6 +32,11 @@ export default function App() {
         <Stack.Screen 
           name="SelectUser" 
           component={SelectUser}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="PetterRegister" 
+          component={PetterRegister}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -124,7 +124,7 @@ const Login = ({ navigation }) => {
                     value={rememberMe}
                     onValueChange={setRememberMe}
                     thumbColor={rememberMe ? "#F08318" : "#f4f3f4"}
-                    trackColor={{ false: "#767577", true: "#F08318" }}
+                    trackColor={{ false: "#f4f3f4", true: "#F08318" }}
                   />
                   <Text style={styles.actionsText}>Recordarme</Text>
                 </View>

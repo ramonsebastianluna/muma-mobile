@@ -14,9 +14,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+    width: 106.67,
+    height: 99,
+    marginTop: 120,
+    marginBottom: 50,
   },
 
   inputGroup: {
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center", // Centra verticalmente
+    alignItems: "center", 
     width: "100%",
     marginBottom: 20,
   },
