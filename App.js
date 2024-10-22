@@ -6,6 +6,7 @@ import Login from './auth/Login';
 import SelectUser from './pages/SelectUser';
 import PetterRegister from './pages/PetterRegister';
 import ProtectorRegister from './pages/ProtectorRegister';
+import AccountValidation from './pages/AccountValidation'; 
 
 
 export default function App() {
@@ -43,6 +44,11 @@ export default function App() {
          <Stack.Screen 
           name="ProtectorRegister" 
           component={ProtectorRegister}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="AccountValidation" 
+          component={AccountValidation}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
