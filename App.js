@@ -5,6 +5,7 @@ import StartedScreen from './pages/StartedScreen';
 import Login from './auth/Login';  
 import SelectUser from './pages/SelectUser';
 import PetterRegister from './pages/PetterRegister';
+import ProtectorRegister from './pages/ProtectorRegister';
 
 
 export default function App() {
@@ -37,6 +38,11 @@ export default function App() {
          <Stack.Screen 
           name="PetterRegister" 
           component={PetterRegister}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="ProtectorRegister" 
+          component={ProtectorRegister}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

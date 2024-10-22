@@ -21,7 +21,7 @@ const SelectUser = () => {
   const navigation = useNavigation();
 
   const handleSubmitProtector = () => {
-    navigation.navigate("RegisterProtector");
+    navigation.navigate("ProtectorRegister");
   };
 
   const handleSubmitOwner = () => {
