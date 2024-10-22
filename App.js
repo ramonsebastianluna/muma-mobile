@@ -8,6 +8,7 @@ import PetterRegister from './pages/PetterRegister';
 import ProtectorRegister from './pages/ProtectorRegister';
 import AccountValidation from './pages/AccountValidation'; 
 import RegisterSuccess from './pages/RegisterSuccess';
+import RegisterRefused from './pages/RegisterRefused';
 
 
 export default function App() {
@@ -57,7 +58,13 @@ export default function App() {
           component={RegisterSuccess}
           options={{ headerShown: false }}
         />
+         <Stack.Screen 
+          name="RegisterRefused" 
+          component={RegisterRefused}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
+      
     </NavigationContainer>
 
   );
