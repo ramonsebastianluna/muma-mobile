@@ -7,7 +7,7 @@ import emailjs from '@emailjs/browser';
 import logo from "../../assets/login.png";
 import eye from "../../assets/eye.png";
 import hidden from "../../assets/Vector.png";
-import styles from './petterRegisterStyles';
+import styles from './PetterRegisterStyles';
 
 
 const validationSchema = Yup.object().shape({
