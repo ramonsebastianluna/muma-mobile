@@ -1,20 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from './pages/SplashScreen';
+import StartedScreen from './pages/StartedScreen';
+import Login from './auth/Login';  
+import SelectUser from './pages/SelectUser';
+import PetterRegister from './pages/PetterRegister';
+import ProtectorRegister from './pages/ProtectorRegister';
+import AccountValidation from './pages/AccountValidation'; 
+
 
 export default function App() {
+  const Stack = createStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="StartedScreen"
+          component={StartedScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+          />
+        <Stack.Screen 
+          name="SelectUser" 
+          component={SelectUser}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="PetterRegister" 
+          component={PetterRegister}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="ProtectorRegister" 
+          component={ProtectorRegister}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen 
+          name="AccountValidation" 
+          component={AccountValidation}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
