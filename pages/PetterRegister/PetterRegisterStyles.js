@@ -10,9 +10,13 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent:"center", 
     alignItems: 'center',
+    marginTop:80,
    
 },
-
+  
+ container_input: {
+  width:"80%"
+ },
   logo: {
     width: 106.67,
     height: 99,
@@ -22,7 +26,7 @@ const styles = StyleSheet.create({
 
   button: {
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 50,
     marginBottom: 40,
     backgroundColor:  "#F08318",
     padding: 15,
