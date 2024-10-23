@@ -9,6 +9,9 @@ import loginImage from "../assets/login.png";
 import eye from "../assets/eye.png";
 import notVisible from "../assets/Vector.png";
 import styles from "./LoginStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "./authSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string("Debe ingresar su usuario")
@@ -19,39 +22,30 @@ const validationSchema = Yup.object().shape({
     .required("Password es requerido"),
 });
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState(null);
-  const [rememberMe, setRememberMe] = useState(false); 
+  const { loading, token, error } = useSelector((state) => state.login);
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const handleSubmit = (values) => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      if (values.email === "test@example.com" && values.password === "123456") {
-        setToken("dummy-token");
-        if (rememberMe) {
-          Alert.alert("Éxito", "Login correcto y usuario recordado");
-        } else {
-          Alert.alert("Éxito", "Login correcto");
-        }
-      } else {
-        Alert.alert("Error", "Credenciales incorrectas");
-      }
-    }, 1000);
+    const credentials = {
+      user: values.email,
+      password: values.password,
+    }
+    dispatch(login(credentials));
   };
 
   useEffect(() => {
     if (token) {
       navigation.navigate("Home");
     }
-  }, [token]);
+  }, [token, navigation]);
 
   return (
     <View style={styles.body}>
@@ -118,6 +112,8 @@ const Login = ({ navigation }) => {
                 )}
               </View>
 
+              {error && <Text style={styles.errorText}>{error}</Text>}
+
               <View style={styles.actions}>
                 <View style={styles.rememberMe}>
                   <Switch
@@ -140,7 +136,7 @@ const Login = ({ navigation }) => {
                 onPress={formikHandleSubmit}
                 disabled={isSubmitting}
               >
-                {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Ingresar</Text>}
+                {loading ? <Text style={styles.buttonText}>...Cargando</Text> : <Text style={styles.buttonText}>Ingresar</Text>}
               </TouchableOpacity>
 
               <TouchableOpacity
