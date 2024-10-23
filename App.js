@@ -9,63 +9,69 @@ import ProtectorRegister from './pages/ProtectorRegister';
 import AccountValidation from './pages/AccountValidation'; 
 import RegisterSuccess from './pages/RegisterSuccess';
 import RegisterRefused from './pages/RegisterRefused';
-
+import Home from './pages/Home/Home';
+import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return (
-    
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Splash"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="StartedScreen"
-          component={StartedScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
           />
-        <Stack.Screen 
-          name="SelectUser" 
-          component={SelectUser}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen 
-          name="PetterRegister" 
-          component={PetterRegister}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen 
-          name="ProtectorRegister" 
-          component={ProtectorRegister}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen 
-          name="AccountValidation" 
-          component={AccountValidation}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen 
-          name="RegisterSuccess" 
-          component={RegisterSuccess}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen 
-          name="RegisterRefused" 
-          component={RegisterRefused}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-      
-    </NavigationContainer>
-
+          <Stack.Screen 
+            name="StartedScreen"
+            component={StartedScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+            />
+          <Stack.Screen 
+            name="SelectUser" 
+            component={SelectUser}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="PetterRegister" 
+            component={PetterRegister}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="ProtectorRegister" 
+            component={ProtectorRegister}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="AccountValidation" 
+            component={AccountValidation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="RegisterSuccess" 
+            component={RegisterSuccess}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="RegisterRefused" 
+            component={RegisterRefused}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Home" 
+            component={Home}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>     
+      </NavigationContainer>
+    </Provider>
   );
 }
