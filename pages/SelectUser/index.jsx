@@ -25,7 +25,7 @@ const SelectUser = () => {
   };
 
   const handleSubmitOwner = () => {
-    navigation.navigate("PetterRegister");
+    navigation.navigate("UploadSuccessful");
   };
 
   return (

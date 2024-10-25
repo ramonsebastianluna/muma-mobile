@@ -8,10 +8,11 @@ import PetterRegister from './pages/PetterRegister';
 import ProtectorRegister from './pages/ProtectorRegister';
 import AccountValidation from './pages/AccountValidation'; 
 import RegisterSuccess from './pages/RegisterSuccess';
-import RegisterRefused from './pages/RegisterRefused';
+import RegisterRefused from './pages/RegisterRefused'
 import Home from './pages/Home/Home';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import UploadSuccessful from './pages/UploadSuccessful';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -68,6 +69,11 @@ export default function App() {
           <Stack.Screen 
             name="Home" 
             component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="UploadSuccessful" 
+            component={UploadSuccessful}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     
