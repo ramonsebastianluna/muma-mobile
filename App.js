@@ -12,6 +12,7 @@ import RegisterRefused from './pages/RegisterRefused';
 import Home from './pages/Home/Home';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import PettAdd from './pages/PettAdd';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -68,6 +69,11 @@ export default function App() {
           <Stack.Screen 
             name="Home" 
             component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="PettAdd" 
+            component={PettAdd}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     
