@@ -14,6 +14,9 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import UploadSuccessful from './pages/UploadSuccessful';
 import Editsuccessful from './pages/EditSuccessful';
+import UnsubscribePett from './pages/UnsubscribePett'
+
+
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -80,6 +83,11 @@ export default function App() {
           <Stack.Screen 
             name="EditSuccessful" 
             component={Editsuccessful}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen 
+            name="UnsubscribePett" 
+            component={UnsubscribePett}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     
