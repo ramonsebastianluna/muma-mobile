@@ -1,70 +1,50 @@
-
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import apiAuthenticated from "../../api/apiAuthenticated";
+import axios from "axios";
+import { useState } from "react";
+import { useSelector } from 'react-redux';
+import { useNavigation } from "@react-navigation/native";
 import { RadioButton } from 'react-native-paper'; 
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from "@react-navigation/native";
-import axios from 'axios';
-import styles from "./pett-add"
-
-const validationSchema = Yup.object().shape({
-  nombre: Yup.string()
-  .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, "El nombre solo debe contener letras")
-  .min(2, "El nombre debe tener al menos 2 caracteres")
-  .max(50, "El nombre no puede tener más de 50 caracteres")
-  .required("El campo Nombre es requerido"),
-   tipoAnimal: Yup.string()
-  .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, "El tipo de animal solo debe contener letras")
-  .min(4, "El tipo de animal debe tener al menos 2 caracteres")
-  .max(50, "El tipo de animal no puede tener más de 50 caracteres")
-  .required("El campo tipo de animal es requerido"),
-  raza: Yup.string()
-  .required('La raza es obligatoria')
-  .max(30, 'La raza no puede superar los 30 caracteres'),
-  descripcion: Yup.string()
-    .max(300, 'La descripción no puede superar los 300 caracteres'),
-  sexo: Yup.string().required("Debes seleccionar un sexo"),
-  temperamentoConAnimales: Yup.string()
-  .required('El temperamento con otros animales es obligatorio'),
-
-  temperamentoConPersonas: Yup.string()
-    .required('El temperamento con personas es obligatorio'),
-
-  edad: Yup.number()
-    .required('La edad es obligatoria')
-    .min(0, 'La edad no puede ser negativa')
-    .max(30, 'La edad no puede superar los 30 años'), 
-  estado: Yup.string()
-  .required('El estado es obligatorio'),
-  tamano: Yup.string().required("El tamaño es requerido"),
-  ciudad: Yup.string().required("Este campo es obligatorio"),
-  mesAnioNacimiento: Yup.string()
-  .matches(/^\d{2}\/\d{2}\/\d{4}$/, "Formato de fecha debe ser DD/MM/AAAA")
-  .required("La fecha de nacimiento es requerida"),
-  protectoraId: Yup.string().required("Este campo es obligatorio"),
-});
+import { Formik } from "formik";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import validationSchema from "./validationShcema";
+import styles from "./pett-add";
 
 const PettAdd = () => {
-  const [imagenes, setImagenes] = useState([]);
   const [subiendo, setSubiendo] = useState(false);
-  const [errorImagenes, setErrorImagenes] = useState("");
+  const { token, userId } = useSelector((state) => state.login);
   const navigation = useNavigation();
- 
+  const [imagenes, setImagenes] = useState([]);
+  const [errorImagenes, setErrorImagenes] = useState("");
+  
+  const initialState = {
+    id: 0,
+    nombre: "",
+    tipoAnimal: "",
+    raza: "",
+    descripcion: "",
+    sexo: "",
+    tamano: "",
+    temperamentoConAnimales: "",
+    temperamentoConPersonas: "",
+    edad: 3,
+    estado: "",
+    ciudad: "",
+    mesAnioNacimiento: "",
+    protectoraId: userId,
+    fotos: [],
+  }
+
   const pickImage = async (setFieldValue) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsMultipleSelection: true,
-      selectionLimit: 10,
-      
-    }
-  );
-  
-console.log(result, "Este es mi result")
+      selectionLimit: 1,
+    });
+
     if (!result.canceled) {
-      if (result.assets.length + imagenes.length > 10) {
+      if (result.assets.length + imagenes.length > 1) {
         setErrorImagenes("No puedes subir más de 10 imágenes.");
         return;
       }
@@ -76,111 +56,91 @@ console.log(result, "Este es mi result")
     }
   };
 
-    
-
-  const uploadImagesToCloudinary = async () => {
-    const formDataArray = imagenes.map((imagen) => {
+  const uploadImagesToCloudinary = async (fotos) => {
+    const formDataArray = fotos.map((imagen) => {
       const formData = new FormData();
-      formData.append("file", { uri: imagen, type: "image/jpeg", name: "animal.jpg" });
-      formData.append("upload_preset", "djn5lvybe");
+      formData.append("file", {
+        uri: imagen,
+        type: 'image/png',
+        name: 'upload.jpg',
+      });
+      formData.append("upload_preset", "mumapreset");
       return formData;
     });
-
+  
     try {
       const responses = await Promise.all(
         formDataArray.map((formData) =>
-          axios.post("https://api.cloudinary.com/v1_1/djn5lvybe/image/upload", formData)
+          axios.post("https://api.cloudinary.com/v1_1/dkthfc4hc/image/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
         )
       );
       return responses.map((response) => response.data.secure_url);
-     
     } catch (error) {
       console.error("Error al subir imágenes:", error);
       throw error;
     }
   };
+  
+  
+  const handleSubmit = async (values) => {
+    setSubiendo(true);
 
-  
-    const handleSubmit = async (values) => {
-      console.log("Submitting form with values:", values);
-      setSubiendo(true);
-  
-      try {
-        const imageUrls = await uploadImagesToCloudinary(); 
-  
-        const data = {
-          id: 0,
-          nombre: values.nombre,
-          tipoAnimal: values.tipoAnimal,
-          raza: values.raza,
-          descripcion: values.descripcion,
-          sexo: values.sexo,
-          tamano: values.tamano,
-          temperamentoConAnimales: values.temperamentoConAnimales,
-          temperamentoConPersonas: values.temperamentoConPersonas,
-          edad: values.edad,
-          estado: values.estado,
-          ciudad: values.ciudad,
-          mesAnioNacimiento: values.mesAnioNacimiento,
-          protectoraId: 0,
-          fotos: imageUrls,
-        };
-         
-       
-  
-        
-        await axios.post("http://192.168.0.72:8081/api/Mascotas/registro", data);
-        console.log("Animal agregado exitosamente");
-        navigation.navigate('Login'); 
-      } catch (error) {
-        console.error("Error al agregar animal:", error);
-      } finally {
-        setSubiendo(false);
-      }
+    const formatMesAnio = (fecha) => {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (`0${date.getMonth() + 1}`).slice(-2);
+      return `${year}-${month}`;
     };
 
-  
-    
+    try {
+      const imageUrl = await uploadImagesToCloudinary(imagenes);
+
+      const data = {
+        ...values,
+        fotos: imageUrl,
+        mesAnioNacimiento: formatMesAnio(values.mesAnioNacimiento),
+        protectoraId: 1, //sobreescribo el id porque no funciona con el id de la protectora logueada.
+      };
+
+      console.log(data)
+
+      const requestAuthenticated = apiAuthenticated(token); 
+      const response = await requestAuthenticated.post("/Mascotas/registro", data);
+      console.log(response.data);
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error("Error al agregar animal:", error);
+    } finally {
+      setSubiendo(false);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-     <Text style={styles.label}>Agregar animal</Text>
+      <Text style={styles.label}>Agregar animal</Text>
       <Formik
-         initialValues={{
-          nombre: "",
-          tipoAnimal: "",
-          raza: "",
-          descripcion: "",
-          sexo: "",
-          tamano: "",
-          temperamentoConAnimales:"",
-          temperamentoConPersonas: "",
-          edad:0,
-          estado:"",
-          ciudad: "",
-          mesAnioNacimiento: "",
-          protectoraId:"",
-          fotos: [],
-        }}
-
+        initialValues={initialState}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-    console.log("onSubmit called"); 
-    handleSubmit(values);
-    setSubmitting(false);
-  }}
+          handleSubmit(values);
+          setSubmitting(false);
+        }}
       >
-       {({
+
+        {({
           values,
           errors,
           touched,
+          setFieldValue,
           handleChange,
           handleBlur,
           handleSubmit: formikHandleSubmit,
           isSubmitting,
-          setFieldValue, 
         }) => (
-        
-          
 
           <View style={styles.containerInput}>
             <TextInput 
@@ -240,7 +200,6 @@ console.log(result, "Este es mi result")
               value={values.temperamentoConAnimales}
               onChangeText={handleChange('temperamentoConAnimales')}
               onBlur={handleBlur('temperamentoConAnimales')}
-             
             />
             {touched.temperamentoConAnimales && errors.temperamentoConAnimales && 
             <Text style={styles.error}>{errors.temperamentoConAnimales}</Text>}
@@ -251,12 +210,11 @@ console.log(result, "Este es mi result")
               value={values.temperamentoConPersonas}
               onChangeText={handleChange('temperamentoConPersonas')}
               onBlur={handleBlur('temperamentoConPersonas')}
-             
             />
             {touched.temperamentoConPersonas && errors.temperamentoConPersonas && 
             <Text style={styles.error}>{errors.temperamentoConPersonas}</Text>}
 
-           <TextInput
+            <TextInput
               style={styles.input}
               placeholder="Edad*"
               keyboardType="numeric"  
@@ -275,7 +233,6 @@ console.log(result, "Este es mi result")
             />
             {touched.estado && errors.estado &&
             <Text style={styles.error}>{errors.estado}</Text>}
-
            
             <TextInput
               style={styles.input}
@@ -294,8 +251,8 @@ console.log(result, "Este es mi result")
               value={values.mesAnioNacimiento}
               onChangeText={handleChange('mesAnioNacimiento')}
               onBlur={handleBlur('mesAnioNacimiento')}
-              
             />
+
             {touched.mesAnioNacimiento && errors.mesAnioNacimiento && 
             <Text style={styles.error}>{errors.mesAnioNacimiento}</Text>}
 
@@ -335,43 +292,37 @@ console.log(result, "Este es mi result")
               {touched.sexo && errors.sexo && <Text style={styles.error}>{errors.sexo}</Text>}
             </View>
             
-            <View>
-               
-                <TouchableOpacity onPress={() => pickImage(setFieldValue)} style={styles.input}>
-                  <Text style={styles.imagePickerText}>Cargar imágenes (máximo 10)*</Text>
-                </TouchableOpacity>
+            <View> 
+              <TouchableOpacity onPress={() => pickImage(setFieldValue)} style={styles.input}>
+                <Text style={styles.imagePickerText}>Cargar imágenes (máximo 10)*</Text>
+              </TouchableOpacity>
 
-               
-                <ScrollView horizontal>
-                  {imagenes.map((uri, index) => (
-                    <Image 
-                      key={index} 
-                      source={{ uri }} 
-                      style={styles.image} 
-                    />
-                  ))}
-                </ScrollView>
+              <ScrollView horizontal>
+                {imagenes.map((uri, index) => (
+                  <Image 
+                    key={index} 
+                    source={{ uri }} 
+                    style={styles.image} 
+                  />
+                ))}
+              </ScrollView>
 
-              
-                {errorImagenes ? <Text style={styles.error}>{errorImagenes}</Text> : null}
-          </View>    
-          <TouchableOpacity 
+              {errorImagenes ? <Text style={styles.error}>{errorImagenes}</Text> : null}
+            </View>    
+            <TouchableOpacity 
               onPress={formikHandleSubmit}
               style={styles.button}
               disabled={isSubmitting}>
-              <Text style={styles.buttonText}>Enviar</Text>
-          </TouchableOpacity>
-
-
-
+              <Text style={styles.buttonText}>
+                {subiendo ? "Subiendo imágenes..." : "Agregar Animal"}
+              </Text>
+            </TouchableOpacity>
           </View>
-          
         )}
       </Formik>
     </ScrollView>
   );
-};
-
+}
 
 
 export default PettAdd;
