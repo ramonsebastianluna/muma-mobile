@@ -3,9 +3,9 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import { useNavigation } from "@react-navigation/native";
 
 import success from "../../assets/uploadsuccessful.png";
-import styles from './uploadsuccessful';
+import styles from './editsuccessful';
 
-const UploadSuccessful = () => {
+const Editsuccessful = () => {
  
   const navigation = useNavigation();
 
@@ -23,11 +23,8 @@ const UploadSuccessful = () => {
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.titleMain}>Listo!</Text>
-        <Text style={styles.paragraphMain}>
-        Agregaste una nueva mascota con éxito. 
-        Entre todos podemos encontrarles un hogar.
-        </Text>
+        <Text style={styles.titleMain}>Cambios 
+        guardados con éxito!</Text>
         <TouchableOpacity style={styles.btnLogin} onPress={handleNavigate}>
           <Text style={styles.btnText}>Ir al Home</Text>
         </TouchableOpacity>
@@ -36,4 +33,4 @@ const UploadSuccessful = () => {
   );
 };
 
-export default UploadSuccessful;
+export default Editsuccessful;
