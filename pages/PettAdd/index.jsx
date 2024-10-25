@@ -7,16 +7,18 @@ import { RadioButton } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { Formik } from "formik";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Button, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import validationSchema from "./validationShcema";
 import styles from "./pett-add";
 
 const PettAdd = () => {
+  const navigation = useNavigation();
   const [subiendo, setSubiendo] = useState(false);
   const { token, userId } = useSelector((state) => state.login);
-  const navigation = useNavigation();
   const [imagenes, setImagenes] = useState([]);
   const [errorImagenes, setErrorImagenes] = useState("");
+  const [show, setShow] = useState(false);
   
   const initialState = {
     id: 0,
@@ -31,10 +33,14 @@ const PettAdd = () => {
     edad: 3,
     estado: "",
     ciudad: "",
-    mesAnioNacimiento: "",
+    mesAnioNacimiento: "2023-11",
     protectoraId: userId,
     fotos: [],
   }
+
+  const showDatePicker = () => {
+    setShow(true);
+  };
 
   const pickImage = async (setFieldValue) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -186,9 +192,9 @@ const PettAdd = () => {
               style={styles.input}
             >
               <Picker.Item label="Tamaño*" value="" />
-              <Picker.Item label="Pequeño" value="pequeño" />
-              <Picker.Item label="Mediano" value="mediano" />
-              <Picker.Item label="Grande" value="grande" />
+              <Picker.Item label="Pequeño" value="Pequeño" />
+              <Picker.Item label="Mediano" value="Mediano" />
+              <Picker.Item label="Grande" value="Grande" />
             </Picker>
             </View>
             {touched.tamano && errors.tamano && 
@@ -245,13 +251,27 @@ const PettAdd = () => {
             {touched.ciudad && errors.ciudad && 
             <Text style={styles.error}>{errors.ciudad}</Text>}
 
-            <TextInput
-              style={styles.input}
-              placeholder="Nacimiento (DD/MM/AAAA)*"
-              value={values.mesAnioNacimiento}
-              onChangeText={handleChange('mesAnioNacimiento')}
-              onBlur={handleBlur('mesAnioNacimiento')}
-            />
+            <View style={{ padding: 20 }}>
+              <Button onPress={showDatePicker} title="Seleccionar Fecha" />
+              <Text>Fecha seleccionada: {values.mesAnioNacimiento}</Text>
+
+              {show && (
+                <DateTimePicker
+                  value={new Date(values.mesAnioNacimiento + '-01')}
+                  mode="date"
+                  display="default"
+                  onChange={(event, selectedDate) => {
+                    setShow(false); 
+                    if (selectedDate) {
+                      const year = selectedDate.getFullYear();
+                      const month = (`0${selectedDate.getMonth() + 1}`).slice(-2);
+                      const formattedDate = `${year}-${month}`;
+                      setFieldValue('mesAnioNacimiento', formattedDate);
+                    }
+                  }}
+                />
+              )}
+            </View>
 
             {touched.mesAnioNacimiento && errors.mesAnioNacimiento && 
             <Text style={styles.error}>{errors.mesAnioNacimiento}</Text>}
