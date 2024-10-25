@@ -43,7 +43,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigation.navigate("Home");
+      navigation.navigate("PettAdd");
     }
   }, [token, navigation]);
 
