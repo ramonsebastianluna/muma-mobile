@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import UploadSuccessful from './pages/UploadSuccessful';
 import Editsuccessful from './pages/EditSuccessful';
 import UnsubscribePett from './pages/UnsubscribePett'
+import ProtectorCard from './pages/ProtectorCard';
 
 
 
@@ -88,6 +89,11 @@ export default function App() {
            <Stack.Screen 
             name="UnsubscribePett" 
             component={UnsubscribePett}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen 
+            name="ProtectorCard" 
+            component={ProtectorCard}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     

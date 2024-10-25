@@ -25,7 +25,7 @@ const SelectUser = () => {
   };
 
   const handleSubmitOwner = () => {
-    navigation.navigate("PetterRegiser");
+    navigation.navigate("PetterRegister");
   };
 
   return (
