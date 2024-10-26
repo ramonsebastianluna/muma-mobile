@@ -2,15 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 
-
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center', 
    
   },
-
-
 
   logo: {
     width: 106.67,
@@ -80,6 +77,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 8,
   },
+  select: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    color: '#ddd',
+    padding: 0,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
   pickerContainer: {
     borderWidth: 1,
     borderColor: '#ddd',
@@ -121,11 +126,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-  width: 100,
-  height: 100,
-  marginRight: 10,
-  borderRadius: 8,
-}
+    width: 100,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 8,
+  },
+  dateText: {
+    fontSize: 16,
+    color: "#333",
+  },
+
 });
 
 export default styles;
