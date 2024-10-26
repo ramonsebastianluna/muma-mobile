@@ -40,7 +40,7 @@ const ProtectorRegister = () => {
 
   const getCities = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/Combos/Ciudades/1');
+      const response = await axios.get('http://192.168.0.106:8081/api/Combos/Ciudades/1');
       setCities(response.data);
     } catch (error) {
       console.error(error);

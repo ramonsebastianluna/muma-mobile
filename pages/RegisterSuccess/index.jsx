@@ -25,7 +25,7 @@ const RegistroSuccess = () => {
         </View>
         <Text style={styles.titleMain}>¡Qué bueno que estés acá!</Text>
         <Text style={styles.paragraphMain}>
-          ¡Listo ya ! Ya puedes empezar a usar tu cuenta.
+          ¡Listo! Ya puedes empezar a usar tu cuenta.
         </Text>
         <TouchableOpacity style={styles.btnLogin} onPress={handleNavigate}>
           <Text style={styles.btnText}>Ir al login</Text>
