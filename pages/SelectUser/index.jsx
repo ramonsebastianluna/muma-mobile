@@ -25,7 +25,7 @@ const SelectUser = () => {
   };
 
   const handleSubmitOwner = () => {
-    navigation.navigate("PettAdd");
+    navigation.navigate("PetterRegister");
   };
 
   return (

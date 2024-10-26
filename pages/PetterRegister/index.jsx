@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from "@react-navigation/native"; 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -36,6 +37,7 @@ const PetterRegister = () => {
   const form = useRef();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confPasswordVisible, setConfPasswordVisible] = useState(false);
+  const navigation = useNavigation();
 
   const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
   const toggleConfPasswordVisibility = () => setConfPasswordVisible(!confPasswordVisible);
@@ -57,7 +59,7 @@ const PetterRegister = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post("http://localhost:8081/api/Mascoteros/registro", {
+      const response = await axios.post("http://192.168.0.106:8081/api/Mascoteros/registro", {
         nombre: values.name,
         apellido: values.lastName,
         email: values.email,
@@ -66,13 +68,20 @@ const PetterRegister = () => {
 
       const emailStatus = await sendEmail();
       if (emailStatus === "SUCCESS") {
-        Alert.alert("Registro exitoso", "Verifica tu correo para activar la cuenta");
+        navigation.navigate("RegisterSuccess");
       } else {
         Alert.alert("Error", "No se pudo enviar el email");
       }
     } catch (error) {
-      console.log('Error:', error);
-      Alert.alert("Error", "Hubo un problema con el registro");
+      console.log('el error es: ' + error)
+      const response = JSON.parse(error.request.response);
+      console.log('la respuesta es: ' + response)
+
+      if (response.errors && response.errors.includes("Ya existe un usuario registrado con esa dirección de email")) {
+        navigation.navigate("RegisterRefused");
+      } else {
+        console.error("Error:", response.errors);
+      }
     }
   };
 
