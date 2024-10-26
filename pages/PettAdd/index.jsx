@@ -7,8 +7,9 @@ import { RadioButton } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { Formik } from "formik";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Button, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import validationSchema from "./validationShcema";
 import styles from "./pett-add";
 
@@ -33,14 +34,10 @@ const PettAdd = () => {
     edad: 3,
     estado: "",
     ciudad: "",
-    mesAnioNacimiento: "2023-11",
+    mesAnioNacimiento: "",
     protectoraId: userId,
     fotos: [],
   }
-
-  const showDatePicker = () => {
-    setShow(true);
-  };
 
   const pickImage = async (setFieldValue) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -126,221 +123,225 @@ const PettAdd = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.label}>Agregar animal</Text>
-      <Formik
-        initialValues={initialState}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          handleSubmit(values);
-          setSubmitting(false);
-        }}
-      >
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.label}>Agregar animal</Text>
+        <Formik
+          initialValues={initialState}
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            handleSubmit(values);
+            setSubmitting(false);
+          }}
+        >
 
-        {({
-          values,
-          errors,
-          touched,
-          setFieldValue,
-          handleChange,
-          handleBlur,
-          handleSubmit: formikHandleSubmit,
-          isSubmitting,
-        }) => (
+          {({
+            values,
+            errors,
+            touched,
+            setFieldValue,
+            handleChange,
+            handleBlur,
+            handleSubmit: formikHandleSubmit,
+            isSubmitting,
+          }) => (
 
-          <View style={styles.containerInput}>
-            <TextInput 
-              style={styles.input}
-              placeholder="Nombre del animal*"
-              value={values.nombre}
-              onChangeText={handleChange('nombre')}
-              onBlur={handleBlur('nombre')}
+            <View style={styles.containerInput}>
+              <TextInput 
+                style={styles.input}
+                placeholder="Nombre del animal*"
+                value={values.nombre}
+                onChangeText={handleChange('nombre')}
+                onBlur={handleBlur('nombre')}
+                
+              />
+              {touched.nombre && errors.nombre && 
+              <Text style={styles.error}>{errors.nombre}</Text>}
+
+              <TextInput
+                style={styles.input}
+                placeholder="Raza*"
+                value={values.raza}
+                onChangeText={handleChange('raza')}
+                onBlur={handleBlur('raza')}
               
-            />
-            {touched.nombre && errors.nombre && 
-            <Text style={styles.error}>{errors.nombre}</Text>}
-
-            <TextInput
-              style={styles.input}
-              placeholder="Raza*"
-              value={values.raza}
-              onChangeText={handleChange('raza')}
-              onBlur={handleBlur('raza')}
-             
-            />
-            {touched.raza && errors.raza && <Text style={styles.error}>{errors.raza}</Text>}
- 
-            <View style={styles.input}>
-                <Picker 
-                  selectedValue={values.tipoAnimal}
-                  onValueChange={(tipoAnimal) => setFieldValue('tipoAnimal', tipoAnimal)}
-                  style={styles.input}
-                >
-                  <Picker.Item label="Tipo*" value="" />
-                  <Picker.Item label="Perro" value="perro" />
-                  <Picker.Item label="Gato" value="gato" />
-                  <Picker.Item label="Otro" value="otro" />
-                </Picker>
-            </View>
-            {touched.tipoAnimal && errors.tipoAnimal && 
-            <Text style={styles.error}>{errors.tipoAnimal}</Text>}
-
-            <View style={styles.input}>
-            <Picker
-              selectedValue={values.tamano}
-              onValueChange={(itemValue) => setFieldValue('tamano', itemValue)}
-              style={styles.input}
-            >
-              <Picker.Item label="Tamaño*" value="" />
-              <Picker.Item label="Pequeño" value="Pequeño" />
-              <Picker.Item label="Mediano" value="Mediano" />
-              <Picker.Item label="Grande" value="Grande" />
-            </Picker>
-            </View>
-            {touched.tamano && errors.tamano && 
-            <Text style={styles.error}>{errors.tamano}</Text>}
-           
-            <TextInput
-              style={styles.input}
-              placeholder="Carácter con animales*"
-              value={values.temperamentoConAnimales}
-              onChangeText={handleChange('temperamentoConAnimales')}
-              onBlur={handleBlur('temperamentoConAnimales')}
-            />
-            {touched.temperamentoConAnimales && errors.temperamentoConAnimales && 
-            <Text style={styles.error}>{errors.temperamentoConAnimales}</Text>}
-           
-            <TextInput
-              style={styles.input}
-              placeholder="Carácter con personas*"
-              value={values.temperamentoConPersonas}
-              onChangeText={handleChange('temperamentoConPersonas')}
-              onBlur={handleBlur('temperamentoConPersonas')}
-            />
-            {touched.temperamentoConPersonas && errors.temperamentoConPersonas && 
-            <Text style={styles.error}>{errors.temperamentoConPersonas}</Text>}
-
-            <TextInput
-              style={styles.input}
-              placeholder="Edad*"
-              keyboardType="numeric"  
-              value={values.edad}
-              onChangeText={(text) => setFieldValue('edad', text ? parseInt(text.replace(/[^0-9]/g, ''), 10) : 0)}
-
-              onBlur={handleBlur('edad')}
-            />
-            {touched.edad && errors.edad && <Text style={styles.error}>{errors.edad}</Text>}
-            <TextInput
-              style={styles.input}
-              placeholder="Estado*"
-              value={values.estado}
-              onChangeText={handleChange('estado')}
-              onBlur={handleBlur('estado')}
-            />
-            {touched.estado && errors.estado &&
-            <Text style={styles.error}>{errors.estado}</Text>}
-           
-            <TextInput
-              style={styles.input}
-              placeholder="Ubicación*"
-              value={values.ciudad}
-              onChangeText={handleChange('ciudad')}
-              onBlur={handleBlur('ciudad')}
-             
-            />
-            {touched.ciudad && errors.ciudad && 
-            <Text style={styles.error}>{errors.ciudad}</Text>}
-
-            <View style={{ padding: 20 }}>
-              <Button onPress={showDatePicker} title="Seleccionar Fecha" />
-              <Text>Fecha seleccionada: {values.mesAnioNacimiento}</Text>
-
-              {show && (
-                <DateTimePicker
-                  value={new Date(values.mesAnioNacimiento + '-01')}
-                  mode="date"
-                  display="default"
-                  onChange={(event, selectedDate) => {
-                    setShow(false); 
-                    if (selectedDate) {
-                      const year = selectedDate.getFullYear();
-                      const month = (`0${selectedDate.getMonth() + 1}`).slice(-2);
-                      const formattedDate = `${year}-${month}`;
-                      setFieldValue('mesAnioNacimiento', formattedDate);
-                    }
-                  }}
-                />
-              )}
-            </View>
-
-            {touched.mesAnioNacimiento && errors.mesAnioNacimiento && 
-            <Text style={styles.error}>{errors.mesAnioNacimiento}</Text>}
-
-            <TextInput
-              style={styles.textArea}
-              placeholder="Descripcion"
-              value={values.descripcion}
-              onChangeText={handleChange('descripcion')}
-              onBlur={handleBlur('descripcion')}
-              multiline
-            />
-
-            <View style={styles.radioContainer}>
-              <View style={styles.radioGroup}>
-                <TouchableOpacity onPress={() => setFieldValue('sexo', 'Macho')}>
-                  <View style={styles.radioButton}>
-                    <RadioButton
-                      value="Macho"
-                      status={values.sexo === 'Macho' ? 'checked' : 'unchecked'}
-                      onPress={() => setFieldValue('sexo', 'Macho')}
-                    />
-                    <Text>Macho</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setFieldValue('sexo', 'Hembra')}>
-                  <View style={styles.radioButton}>
-                    <RadioButton
-                      value="Hembra"
-                      status={values.sexo === 'Hembra' ? 'checked' : 'unchecked'}
-                      onPress={() => setFieldValue('sexo', 'Hembra')}
-                    />
-                    <Text>Hembra</Text>
-                  </View>
-
-                </TouchableOpacity>
+              />
+              {touched.raza && errors.raza && <Text style={styles.error}>{errors.raza}</Text>}
+  
+              <View style={styles.select}>
+                  <Picker 
+                    selectedValue={values.tipoAnimal}
+                    onValueChange={(tipoAnimal) => setFieldValue('tipoAnimal', tipoAnimal)}
+                  >
+                    <Picker.Item style={{fontSize: 14}} label="Tipo*" value="" />
+                    <Picker.Item style={{fontSize: 14}} label="Perro" value="perro" />
+                    <Picker.Item style={{fontSize: 14}} label="Gato" value="gato" />
+                    <Picker.Item style={{fontSize: 14}} label="Otro" value="otro" />
+                  </Picker>
               </View>
-              {touched.sexo && errors.sexo && <Text style={styles.error}>{errors.sexo}</Text>}
-            </View>
+              {touched.tipoAnimal && errors.tipoAnimal && 
+              <Text style={styles.error}>{errors.tipoAnimal}</Text>}
+
+              <View style={styles.select}>
+                <Picker
+                  selectedValue={values.tamano}
+                  onValueChange={(itemValue) => setFieldValue('tamano', itemValue)}
+                >
+                  <Picker.Item style={{fontSize: 14}} label="Tamaño*" value="" />
+                  <Picker.Item style={{fontSize: 14}} label="Pequeño" value="Pequeño" />
+                  <Picker.Item style={{fontSize: 14}} label="Mediano" value="Mediano" />
+                  <Picker.Item style={{fontSize: 14}} label="Grande" value="Grande" />
+                </Picker>
+              </View>
+              {touched.tamano && errors.tamano && 
+              <Text style={styles.error}>{errors.tamano}</Text>}
             
-            <View> 
-              <TouchableOpacity onPress={() => pickImage(setFieldValue)} style={styles.input}>
-                <Text style={styles.imagePickerText}>Cargar imágenes (máximo 10)*</Text>
-              </TouchableOpacity>
+              <TextInput
+                style={styles.input}
+                placeholder="Carácter con animales*"
+                value={values.temperamentoConAnimales}
+                onChangeText={handleChange('temperamentoConAnimales')}
+                onBlur={handleBlur('temperamentoConAnimales')}
+              />
+              {touched.temperamentoConAnimales && errors.temperamentoConAnimales && 
+              <Text style={styles.error}>{errors.temperamentoConAnimales}</Text>}
+            
+              <TextInput
+                style={styles.input}
+                placeholder="Carácter con personas*"
+                value={values.temperamentoConPersonas}
+                onChangeText={handleChange('temperamentoConPersonas')}
+                onBlur={handleBlur('temperamentoConPersonas')}
+              />
+              {touched.temperamentoConPersonas && errors.temperamentoConPersonas && 
+              <Text style={styles.error}>{errors.temperamentoConPersonas}</Text>}
 
-              <ScrollView horizontal>
-                {imagenes.map((uri, index) => (
-                  <Image 
-                    key={index} 
-                    source={{ uri }} 
-                    style={styles.image} 
+              <TextInput
+                style={styles.input}
+                placeholder="Edad*"
+                keyboardType="numeric"  
+                value={values.edad}
+                onChangeText={(text) => setFieldValue('edad', text ? parseInt(text.replace(/[^0-9]/g, ''), 10) : 0)}
+
+                onBlur={handleBlur('edad')}
+              />
+              {touched.edad && errors.edad && <Text style={styles.error}>{errors.edad}</Text>}
+              <TextInput
+                style={styles.input}
+                placeholder="Estado*"
+                value={values.estado}
+                onChangeText={handleChange('estado')}
+                onBlur={handleBlur('estado')}
+              />
+              {touched.estado && errors.estado &&
+              <Text style={styles.error}>{errors.estado}</Text>}
+            
+              <TextInput
+                style={styles.input}
+                placeholder="Ubicación*"
+                value={values.ciudad}
+                onChangeText={handleChange('ciudad')}
+                onBlur={handleBlur('ciudad')}
+              
+              />
+              {touched.ciudad && errors.ciudad && 
+              <Text style={styles.error}>{errors.ciudad}</Text>}
+
+              <View>
+
+                <TouchableOpacity onPress={() => setShow(true)} style={styles.input}>
+                  <Text style={{ paddingTop: 5, paddingBottom: 5 }}>
+                    {values.mesAnioNacimiento === "" ? "Nacimiento*" : values.mesAnioNacimiento}
+                  </Text>
+                </TouchableOpacity>
+
+                {show && (
+                  <DateTimePicker
+                    value={new Date()}
+                    mode="date"
+                    display="default"
+                    onChange={(event, selectedDate) => {
+                      setShow(false); 
+                      if (selectedDate) {
+                        setFieldValue('mesAnioNacimiento', selectedDate.toISOString().split('T')[0]);
+                      }
+                    }}
+                    minimumDate={new Date(2000, 0, 1)}
+                    maximumDate={new Date()}
                   />
-                ))}
-              </ScrollView>
+                )}
+              </View>
 
-              {errorImagenes ? <Text style={styles.error}>{errorImagenes}</Text> : null}
-            </View>    
-            <TouchableOpacity 
-              onPress={formikHandleSubmit}
-              style={styles.button}
-              disabled={isSubmitting}>
-              <Text style={styles.buttonText}>
-                {subiendo ? "Subiendo imágenes..." : "Agregar Animal"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
-    </ScrollView>
+              {touched.mesAnioNacimiento && errors.mesAnioNacimiento && 
+              <Text style={styles.error}>{errors.mesAnioNacimiento}</Text>}
+
+              <TextInput
+                style={styles.textArea}
+                placeholder="Descripcion"
+                value={values.descripcion}
+                onChangeText={handleChange('descripcion')}
+                onBlur={handleBlur('descripcion')}
+                multiline
+              />
+
+              <View style={styles.radioContainer}>
+                <View style={styles.radioGroup}>
+                  <TouchableOpacity onPress={() => setFieldValue('sexo', 'Macho')}>
+                    <View style={styles.radioButton}>
+                      <RadioButton
+                        value="Macho"
+                        status={values.sexo === 'Macho' ? 'checked' : 'unchecked'}
+                        onPress={() => setFieldValue('sexo', 'Macho')}
+                      />
+                      <Text>Macho</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => setFieldValue('sexo', 'Hembra')}>
+                    <View style={styles.radioButton}>
+                      <RadioButton
+                        value="Hembra"
+                        status={values.sexo === 'Hembra' ? 'checked' : 'unchecked'}
+                        onPress={() => setFieldValue('sexo', 'Hembra')}
+                      />
+                      <Text>Hembra</Text>
+                    </View>
+
+                  </TouchableOpacity>
+                </View>
+                {touched.sexo && errors.sexo && <Text style={styles.error}>{errors.sexo}</Text>}
+              </View>
+              
+              <View> 
+                <TouchableOpacity onPress={() => pickImage(setFieldValue)} style={styles.input}>
+                  <Text style={styles.imagePickerText}>Cargar imágenes (máximo 10)*</Text>
+                </TouchableOpacity>
+
+                <ScrollView horizontal>
+                  {imagenes.map((uri, index) => (
+                    <Image 
+                      key={index} 
+                      source={{ uri }} 
+                      style={styles.image} 
+                    />
+                  ))}
+                </ScrollView>
+
+                {errorImagenes ? <Text style={styles.error}>{errorImagenes}</Text> : null}
+              </View>    
+              <TouchableOpacity 
+                onPress={formikHandleSubmit}
+                style={styles.button}
+                disabled={isSubmitting}>
+                <Text style={styles.buttonText}>
+                  {subiendo ? "Subiendo imágenes..." : "Agregar Animal"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
+    </SafeAreaView>
+
   );
 }
 
