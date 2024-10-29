@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native"; 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import emailjs from '@emailjs/browser';
+import Constants from 'expo-constants';
 import logo from "../../assets/login.png";
 import eye from "../../assets/eye.png";
 import hidden from "../../assets/Vector.png";
@@ -34,7 +34,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const PetterRegister = () => {
-  const form = useRef();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confPasswordVisible, setConfPasswordVisible] = useState(false);
   const navigation = useNavigation();
@@ -42,20 +41,24 @@ const PetterRegister = () => {
   const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
   const toggleConfPasswordVisibility = () => setConfPasswordVisible(!confPasswordVisible);
 
-  const sendEmail = async () => {
+  const sendEmail = async (name) => {
     try {
-      await emailjs.sendForm(
-        process.env.VITE_EMAILJS_SERVICE_ID,
-        process.env.VITE_EMAILJS_TEMPLATE_ID,
-        form.current,
-        { publicKey: process.env.VITE_EMAILJS_PUBLIC_KEY }
-      );
-      return "SUCCESS";
+      const response = await axios.post('https://api.emailjs.com/api/v1.0/email/send', {
+        service_id: Constants.expoConfig.extra.SERVICE_ID,
+        template_id: Constants.expoConfig.extra.TEMPLATE_ID,
+        user_id: Constants.expoConfig.extra.PUBLIC_KEY,
+        template_params: {
+          name: name,
+        },
+      });
+  
+      return response.status === 200 ? "SUCCESS" : "ERROR";
+  
     } catch (error) {
-      console.log(error);
-      return error.text;
+      console.error("Error en el envío del email:", error.response ? error.response.data : error.message);
+      return error.response ? error.response.data : error.message;
     }
-  };
+  }
 
   const handleSubmit = async (values) => {
     try {
@@ -66,11 +69,11 @@ const PetterRegister = () => {
         password: values.password,
       });
 
-      const emailStatus = await sendEmail();
+      const emailStatus = await sendEmail(values.name);
       if (emailStatus === "SUCCESS") {
-        navigation.navigate("RegisterSuccess");
+        navigation.navigate("AccountValidation");
       } else {
-        Alert.alert("Error", "No se pudo enviar el email");
+        console.error("Error al enviar el email:", emailStatus);
       }
     } catch (error) {
       console.log('el error es: ' + error)
