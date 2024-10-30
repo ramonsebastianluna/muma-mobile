@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import ProtectorImg from '../../assets/profilePicture.png';
 import IconClose from '../../assets/x-circle.png';
 import styles from './protector-card';
-import phone from '../../assets/phone (2).png'
+import phone from '../../assets/phone.png'
 
 const ProtectorCard = ({
   protectorName = 'Animalistas',
