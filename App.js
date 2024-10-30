@@ -9,7 +9,7 @@ import ProtectorRegister from './pages/ProtectorRegister';
 import AccountValidation from './pages/AccountValidation'; 
 import RegisterSuccess from './pages/RegisterSuccess';
 import RegisterRefused from './pages/RegisterRefused'
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import UploadSuccessful from './pages/UploadSuccessful';
@@ -18,7 +18,9 @@ import UnsubscribePett from './pages/UnsubscribePett'
 import ProtectorCard from './pages/ProtectorCard';
 import DetailPett from './pages/DetailPett';
 import PettAdd from './pages/PettAdd';
+
 import PettCard from './pages/PettCard';
+
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -82,6 +84,13 @@ export default function App() {
             component={UploadSuccessful}
             options={{ headerShown: false }}
           />
+
+          <Stack.Screen
+            name="PettAdd" 
+            component={PettAdd}
+            options={{ headerShown: false }}
+          />
+
           <Stack.Screen 
             name="EditSuccessful" 
             component={Editsuccessful}
