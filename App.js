@@ -9,7 +9,7 @@ import ProtectorRegister from './pages/ProtectorRegister';
 import AccountValidation from './pages/AccountValidation'; 
 import RegisterSuccess from './pages/RegisterSuccess';
 import RegisterRefused from './pages/RegisterRefused'
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import UploadSuccessful from './pages/UploadSuccessful';
