@@ -85,7 +85,7 @@ const Home = () => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Tipo de mascota (e.g., perro, gato)"
+            placeholder="Nombre; estado, protectora y sexo"
             placeholderTextColor="#D8D8D8"
             value={searchQuery}
             onChangeText={setSearchQuery}
