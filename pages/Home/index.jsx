@@ -65,7 +65,7 @@ const Home = () => {
             : 
             <ScrollView horizontal>
               {(petsAvailable.map((pet) => (
-                <PetCard key={pet.id} img={pet.fotos[0]} name={pet.nombre} city={pet.ciudad} sex={pet.sexo} />))
+                <PetCard key={pet.id} id={pet.id} img={pet.fotos[0]} name={pet.nombre} city={pet.ciudad} sex={pet.sexo} />))
               )}
             </ScrollView>
           }

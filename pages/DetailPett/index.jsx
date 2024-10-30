@@ -1,5 +1,8 @@
-import React from "react";
+import { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useRoute } from '@react-navigation/native';
+import { useSelector, useDispatch } from "react-redux";
+import { getPets } from "../../pages/Home/petSlice";
 import imgGatito from "../../assets/gatito.jpeg";
 import mapIcon from "../../assets/map-pin.png";
 import styles from "./detailPettStyles";
@@ -7,6 +10,15 @@ import imgProtector from "../../assets/animalistaLogo.png";
 import imgPhone from "../../assets/phone.png";
 
 const DetailPett = () => {
+  const { selectedPet } = useSelector((state) => state.pets);
+  const route = useRoute();
+  const { id } = route.params;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPets(id));
+  }, []);
+  
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -15,7 +27,7 @@ const DetailPett = () => {
 
       <View style={styles.detailsContainer}>
         <View style={styles.header}>
-          <Text style={styles.petName}>Garfield</Text>
+          <Text style={styles.petName}>Nombre</Text>
           <TouchableOpacity style={styles.statusBadge}>
             <Text style={styles.statusText}>En adopción</Text>
           </TouchableOpacity>
