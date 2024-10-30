@@ -22,6 +22,7 @@ import PetCard from "../PettCard";
 import ProtectorCard from "../ProtectorCard";
 import iconSearch from "../../assets/iconSearch.png";
 
+
 const { width } = Dimensions.get("window");
 
 const Home = () => {

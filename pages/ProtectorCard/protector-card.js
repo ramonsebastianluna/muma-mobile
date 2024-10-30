@@ -7,9 +7,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center', 
     backgroundColor: '#f8f9fa', 
+    marginRight: 20,
+    marginTop:100,
     },
     card: {
-      width: 280,
+      width: 180,
+      height:200,
       borderRadius: 15,
       backgroundColor: '#fff',
       shadowColor: '#000',
@@ -19,6 +22,7 @@ const styles = StyleSheet.create({
       elevation: 4,
       padding: 16,
       position: 'relative',
+      
     },
     closeButton: {
       width: 24,

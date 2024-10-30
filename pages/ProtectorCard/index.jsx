@@ -5,11 +5,7 @@ import IconClose from '../../assets/x-circle.png';
 import styles from './protector-card';
 import phone from '../../assets/phone.png'
 
-const ProtectorCard = ({
-  protectorName = 'Animalistas',
-  protectorDesc = 'Se parte del cambio que querés ver en el mundo',
-  protectorMail = 'animalistas@gmail.com',
-  protectorInstagram = '@animalistasderosario',
+const ProtectorCard = ({protectorName, protectorDesc, protectorMail, protectorInstagram, 
 }) => {
   return (
     <View style={styles.container}>  
