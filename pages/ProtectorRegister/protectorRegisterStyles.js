@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center', 
+    margintop:100,
    
   },
 

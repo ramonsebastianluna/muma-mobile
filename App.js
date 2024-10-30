@@ -13,6 +13,10 @@ import Home from './pages/Home';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import UploadSuccessful from './pages/UploadSuccessful';
+import Editsuccessful from './pages/EditSuccessful';
+import UnsubscribePett from './pages/UnsubscribePett'
+import ProtectorCard from './pages/ProtectorCard';
+import DetailPett from './pages/DetailPett';
 import PettAdd from './pages/PettAdd';
 
 export default function App() {
@@ -80,6 +84,26 @@ export default function App() {
           <Stack.Screen
             name="PettAdd" 
             component={PettAdd}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="EditSuccessful" 
+            component={Editsuccessful}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen 
+            name="UnsubscribePett" 
+            component={UnsubscribePett}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen 
+            name="ProtectorCard" 
+            component={ProtectorCard}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="DetailPett" 
+            component={DetailPett}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     
