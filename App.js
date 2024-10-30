@@ -19,6 +19,9 @@ import ProtectorCard from './pages/ProtectorCard';
 import DetailPett from './pages/DetailPett';
 import PettAdd from './pages/PettAdd';
 
+import PettCard from './pages/PettCard';
+
+
 export default function App() {
   const Stack = createStackNavigator();
 
@@ -81,11 +84,6 @@ export default function App() {
             component={UploadSuccessful}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="PettAdd" 
-            component={PettAdd}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen 
             name="EditSuccessful" 
             component={Editsuccessful}
@@ -104,6 +102,16 @@ export default function App() {
           <Stack.Screen 
             name="DetailPett" 
             component={DetailPett}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PettAdd" 
+            component={PettAdd}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="PettCard" 
+            component={PettCard}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     
