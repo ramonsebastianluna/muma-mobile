@@ -84,13 +84,6 @@ export default function App() {
             component={UploadSuccessful}
             options={{ headerShown: false }}
           />
-
-          <Stack.Screen
-            name="PettAdd" 
-            component={PettAdd}
-            options={{ headerShown: false }}
-          />
-
           <Stack.Screen 
             name="EditSuccessful" 
             component={Editsuccessful}

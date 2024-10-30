@@ -1,30 +1,30 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-   container:{
-    padding: 100,
-
-   },  
-    card: {
-        width: 160,
-        height: 220 ,
-        left:165,
-        borderRadius: 10,
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 5,
-        marginBottom: 16,
+  container:{
+    padding: 0,
+    marginLeft: 10,
+    marginRight: 10,
+  },  
+  card: {
+    width: 160,
+    height: 220,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+    marginBottom: 16,
   },
   image: {
     width: 159,
     height: 129.23,
     overflow: 'hidden',
     gap: 0,
-    borderRadius: '5 5 18 5',
+    //borderRadius: '5 5 18 5',
     
   },
   body: {
