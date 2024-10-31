@@ -14,6 +14,7 @@ const PetCard = ({id, img, name, city, sex }) => {
   };
 
   return (
+    
     <TouchableOpacity onPress={handleNavigate}>
       <View style={styles.container}>
         <View style={styles.card}>
