@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useRoute } from '@react-navigation/native';
 import { useSelector, useDispatch } from "react-redux";
-import { getPets } from "../../pages/Home/petSlice";
+import { getPets, clearSelectedPet } from "../../pages/Home/petSlice";
 import imgGatito from "../../assets/gatito.jpeg";
 import mapIcon from "../../assets/map-pin.png";
 import styles from "./detailPettStyles";
 import imgProtector from "../../assets/animalistaLogo.png";
 import imgPhone from "../../assets/phone.png";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const DetailPett = () => {
   const { selectedPet } = useSelector((state) => state.pets);
@@ -17,7 +18,11 @@ const DetailPett = () => {
 
   useEffect(() => {
     dispatch(getPets(id));
-  }, []);
+
+    return () => {
+      dispatch(getPets());
+    };
+  }, [dispatch, id]);
   
   return (
     <View style={styles.container}>
