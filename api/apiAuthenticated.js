@@ -1,8 +1,9 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 
 const apiAuthenticated = (token) => {
   return axios.create({
-    baseURL: 'http://192.168.0.106:8081/api',
+    baseURL: Constants.expoConfig.extra.IP_LOCAL,
     headers: {
       'X-Custom-Header': 'foobar',
       'Authorization': `Bearer ${token}`

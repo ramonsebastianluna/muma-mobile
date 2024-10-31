@@ -1,5 +1,8 @@
-import React from "react";
+import { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useRoute } from '@react-navigation/native';
+import { useSelector, useDispatch } from "react-redux";
+import { getPets } from "../../pages/Home/petSlice";
 import imgGatito from "../../assets/gatito.jpeg";
 import mapIcon from "../../assets/map-pin.png";
 import styles from "./detailPettStyles";
@@ -7,27 +10,36 @@ import imgProtector from "../../assets/animalistaLogo.png";
 import imgPhone from "../../assets/phone.png";
 
 const DetailPett = () => {
+  const { selectedPet } = useSelector((state) => state.pets);
+  const route = useRoute();
+  const { id } = route.params;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPets(id));
+  }, []);
+  
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={imgGatito} style={styles.petImage} />
+        <Image source={{ uri: selectedPet?.fotos[0]}} style={styles.petImage} />
       </View>
 
       <View style={styles.detailsContainer}>
         <View style={styles.header}>
-          <Text style={styles.petName}>Garfield</Text>
+          <Text style={styles.petName}>{selectedPet?.nombre}</Text>
           <TouchableOpacity style={styles.statusBadge}>
             <Text style={styles.statusText}>En adopción</Text>
           </TouchableOpacity>
         </View>
 
         <Text style={styles.locationText}>
-          <Image source={mapIcon} /> Rosario (2.5 km)
+          <Image source={mapIcon} /> {selectedPet?.ciudad} (2.5 km)
         </Text>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoItem}>
-            Macho{"\n"}
+            {selectedPet?.sexo + "\n"}
             <Text style={styles.infoSegItem}> Sexo</Text>
           </Text>
           <Text style={styles.infoItem}>
@@ -35,11 +47,11 @@ const DetailPett = () => {
             <Text style={styles.infoSegItem}> Color</Text>
           </Text>
           <Text style={styles.infoItem}>
-            Persa{"\n"}
+            {selectedPet?.raza + "\n"}
             <Text style={styles.infoSegItem}> Raza</Text>
           </Text>
           <Text style={styles.infoItem}>
-            2 años{"\n"}
+            {selectedPet?.edad + " años\n"}
             <Text style={styles.infoSegItem}> Edad</Text>
           </Text>
         </View>
@@ -49,9 +61,8 @@ const DetailPett = () => {
             <Image source={imgProtector} style={styles.userImage} />
 
             <Text>
-              {" "}
               Protectora{"\n"}
-              <Text style={styles.infoSegItem}> Animalistas</Text>
+              <Text style={styles.infoSegItem}>{selectedPet?.protectora.nombre}</Text>
             </Text>
           </View>
 
@@ -59,8 +70,7 @@ const DetailPett = () => {
         </View>
 
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut
-          velit.
+          {selectedPet?.descripcion}
         </Text>
 
         <TouchableOpacity style={styles.adoptButton}>

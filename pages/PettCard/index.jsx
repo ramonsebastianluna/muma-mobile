@@ -6,11 +6,11 @@ import hembra from '../../assets/card-pet/hembra.png';
 import pinMap from '../../assets/card-pet/pin-map.png';
 import styles from './pettCardStyles';
 
-const PetCard = ({ img, name, city, sex }) => {
+const PetCard = ({id, img, name, city, sex }) => {
   const navigation = useNavigation();
 
   const handleNavigate = () => {
-    navigation.navigate('DetailPett'); 
+    navigation.navigate('DetailPett', {id}); 
   };
 
   return (

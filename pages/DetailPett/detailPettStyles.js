@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#9747FF",
     alignItems: "center",
-    width: 180,
-    height: 50,
   },
   statusText: {
     color: "#9747FF",
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
+    paddingVertical: 3,
+    paddingHorizontal: 15,
   },
   infoRow: {
     flexDirection: "row",
