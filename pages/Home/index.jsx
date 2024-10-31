@@ -22,8 +22,14 @@ import PetCard from "../PettCard";
 import ProtectorCard from "../ProtectorCard";
 import iconSearch from "../../assets/iconSearch.png";
 
-
 const { width } = Dimensions.get("window");
+
+const categories = [
+  { id: 1, name: "Gato", icon: "🐱" },
+  { id: 2, name: "Perro", icon: "🐶" },
+  { id: 3, name: "Hamster", icon: "🐹" },
+  { id: 4, name: "Conejo", icon: "🐰" },
+];
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,11 +43,21 @@ const Home = () => {
   const slideAnim = useRef(new Animated.Value(-width)).current;
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPets, setFilteredPets] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
 
   /**Logica del buscador */
   const handleSearch = () => {
-    const filtered = petsAvailable.filter((pet) =>
+    const filtered =petsAvailable.filter((pet) =>
       pet.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredPets(filtered);
+  };
+
+  /** */
+  const handleTypeFilter = (type) => {
+    setSelectedType(type);
+    const filtered = petsAvailable.filter(
+      (pet) => pet.tipoAnimal.toLowerCase() === type.toLowerCase()
     );
     setFilteredPets(filtered);
   };
@@ -83,6 +99,7 @@ const Home = () => {
 
         {/* Buscador */}
         <View style={styles.searchContainer}>
+      
           <TextInput
             style={styles.searchInput}
             placeholder="Nombre; estado, protectora y sexo"
@@ -95,12 +112,31 @@ const Home = () => {
           </TouchableOpacity>
         </View>
 
-        <View>
-          <Text style={{ height: 100 }}>Acá va slider</Text>
-        </View>
+       
+          <View>
+            <Text style={styles.sectionTitle}>Categorias</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {categories.map((category) => (
+                <TouchableOpacity
+                  key={category.id}
+                  style={[
+                    styles.categoryItem,
+                    selectedType === category.name &&
+                      styles.categoryItemSelected,
+                  ]}
+                  onPress={() => handleTypeFilter(category.name)}
+                >
+                  <Text style={styles.categoryIcon}>{category.icon}</Text>
+                  <Text style={styles.categoryText}>{category.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+       
 
         <View>
-          {filteredPets.length > 0 ? ( 
+        <Text style={styles.sectionTitle}>Animales</Text>
+          {filteredPets.length > 0 ? (
             <ScrollView horizontal>
               {filteredPets.map((pet) => (
                 <PetCard
@@ -127,11 +163,14 @@ const Home = () => {
           ) : (
             <Text style={{ textAlign: "center" }}>
               No hay mascotas disponibles
-            </Text> 
+            </Text>
           )}
         </View>
         <View>
-          <ScrollView horizontal>
+        <Text style={styles.sectionTitle}>Protectoras</Text>
+        </View>
+        <View>
+          <ScrollView horizontal style={styles.protectorCardContainer}>
             {protectorsAvailable.map((protector) => (
               <ProtectorCard
                 key={protector.id}
@@ -259,6 +298,41 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
     color: "#333",
+  },
+  categoryItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    marginBottom: 20,
+    paddingLeft: 20,
+  },
+  categoryItemSelected: {
+    backgroundColor: "#d0e1f9",
+  },
+  categoryIcon: {
+    fontSize: 20,
+    marginRight: 5,
+
+  },
+  categoryText: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  sectionTitle: {
+    fontSize: 20,
+    color:'#5F5B5B',
+    fontWeight: "bold",
+    marginBottom:10,
+    marginTop:20,
+    paddingLeft: 20,
+  },
+  protectorCardContainer: {
+    marginHorizontal: 20,
+
   },
 });
 
