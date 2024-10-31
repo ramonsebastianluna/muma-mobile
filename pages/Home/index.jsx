@@ -34,7 +34,7 @@ const categories = [
 const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { token, role } = useSelector((state) => state.login);
+  const { token, role, loading } = useSelector((state) => state.login);
   const { petsAvailable, protectorsAvailable } = useSelector(
     (state) => state.pets
   );
@@ -113,63 +113,69 @@ const Home = () => {
         </View>
 
        
-          <View>
-            <Text style={styles.sectionTitle}>Categorias</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {categories.map((category) => (
-                <TouchableOpacity
-                  key={category.id}
-                  style={[
-                    styles.categoryItem,
-                    selectedType === category.name &&
-                      styles.categoryItemSelected,
-                  ]}
-                  onPress={() => handleTypeFilter(category.name)}
-                >
-                  <Text style={styles.categoryIcon}>{category.icon}</Text>
-                  <Text style={styles.categoryText}>{category.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+        <View>
+          <Text style={styles.sectionTitle}>Categorias</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {categories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.categoryItem,
+                  selectedType === category.name &&
+                    styles.categoryItemSelected,
+                ]}
+                onPress={() => handleTypeFilter(category.name)}
+              >
+                <Text style={styles.categoryIcon}>{category.icon}</Text>
+                <Text style={styles.categoryText}>{category.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
        
 
         <View>
-        <Text style={styles.sectionTitle}>Animales</Text>
-          {filteredPets.length > 0 ? (
-            <ScrollView horizontal>
-              {filteredPets.map((pet) => (
-                <PetCard
-                  key={pet.id}
-                  img={pet.fotos[0]}
-                  name={pet.nombre}
-                  city={pet.ciudad}
-                  sex={pet.sexo}
-                />
-              ))}
-            </ScrollView>
-          ) : petsAvailable.length > 0 ? (
-            <ScrollView horizontal>
-              {petsAvailable.map((pet) => (
-                <PetCard
-                  key={pet.id}
-                  id = {pet.id}
-                  img={pet.fotos[0]}
-                  name={pet.nombre}
-                  city={pet.ciudad}
-                  sex={pet.sexo}
-                />
-              ))}
-            </ScrollView>
-          ) : (
-            <Text style={{ textAlign: "center" }}>
-              No hay mascotas disponibles
-            </Text>
-          )}
+          <Text style={styles.sectionTitle}>Animales</Text>
+            {filteredPets.length > 0 ? (
+              <ScrollView horizontal>
+                {filteredPets.map((pet) => (
+                  <PetCard
+                    key={pet.id}
+                    img={pet.fotos[0]}
+                    name={pet.nombre}
+                    city={pet.ciudad}
+                    sex={pet.sexo}
+                  />
+                ))}
+              </ScrollView>
+            ) : petsAvailable.length > 0 ? (
+              <ScrollView horizontal>
+                {petsAvailable.map((pet) => (
+                  <PetCard
+                    key={pet.id}
+                    id = {pet.id}
+                    img={pet.fotos[0]}
+                    name={pet.nombre}
+                    city={pet.ciudad}
+                    sex={pet.sexo}
+                  />
+                ))}
+              </ScrollView>
+            ) : loading ? (
+              <Text style={{ textAlign: "center" }}>
+                No hay mascotas disponibles
+              </Text>
+            ) : (
+              <Text style={{ textAlign: "center" }}>
+                Cargando...
+              </Text>
+            )}
         </View>
+
         <View>
-        <Text style={styles.sectionTitle}>Protectoras</Text>
+          <Text style={styles.sectionTitle}>Protectoras</Text>
         </View>
+
         <View>
           <ScrollView horizontal style={styles.protectorCardContainer}>
             {protectorsAvailable.map((protector) => (
