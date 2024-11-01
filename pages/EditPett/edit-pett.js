@@ -71,18 +71,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
+    backgroundColor: '#F6F6F6',
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ccc",
     padding: 10,
-    marginBottom: 10,
     borderRadius: 8,
   },
   select: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ccc",
+    backgroundColor: '#F6F6F6',
     color: '#ddd',
     padding: 0,
-    marginBottom: 10,
     borderRadius: 8,
   },
   pickerContainer: {
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textArea: {
+    backgroundColor: '#F6F6F6',
     borderWidth: 1,
     borderColor: '#ddd',
     padding: 10,
@@ -102,10 +103,9 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    marginBottom: 10,
   },
   radioContainer: {
-    marginBottom: 20,
+    marginBottom: 0,
   },
   radioGroup: {
     flexDirection: 'row',
@@ -135,7 +135,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
   },
-
+  inputGroup: {
+    marginBottom: 15,
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+  },
 });
 
 export default styles;
