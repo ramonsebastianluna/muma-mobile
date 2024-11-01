@@ -20,6 +20,7 @@ import DetailPett from './pages/DetailPett';
 import PettAdd from './pages/PettAdd';
 
 import PettCard from './pages/PettCard';
+import EditPett from './pages/EditPett';
 
 
 export default function App() {
@@ -112,6 +113,11 @@ export default function App() {
            <Stack.Screen
             name="PettCard" 
             component={PettCard}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="EditPett" 
+            component={EditPett}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>     

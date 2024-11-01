@@ -139,12 +139,14 @@ const Home = () => {
             {filteredPets.length > 0 ? (
               <ScrollView horizontal>
                 {filteredPets.map((pet) => (
-                  <PetCard
+                  <PetCard 
+                    
                     key={pet.id}
                     img={pet.fotos[0]}
                     name={pet.nombre}
                     city={pet.ciudad}
                     sex={pet.sexo}
+                    role={role}
                   />
                 ))}
               </ScrollView>
@@ -158,6 +160,7 @@ const Home = () => {
                     name={pet.nombre}
                     city={pet.ciudad}
                     sex={pet.sexo}
+                    role={role}
                   />
                 ))}
               </ScrollView>
