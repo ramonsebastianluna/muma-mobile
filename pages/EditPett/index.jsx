@@ -47,21 +47,21 @@ const EditPett = () => {
   
   
   const initialState = {
-    id: pet.id,
-    nombre: pet.nombre,
-    tipoAnimal: pet.tipoAnimal,
-    raza: pet.raza,
-    descripcion: pet.descripcion ,
-    sexo: pet.sexo,
-    tamano: pet.tamano,
-    temperamentoConAnimales: pet.temperamentoConAnimales,
-    temperamentoConPersonas: pet.temperamentoConPersonas,
-    edad: pet.edad,
-    estado: pet.estado,
-    ciudad: pet.ciudad,
-    mesAnioNacimiento: pet.mesAnioNacimiento,
-    protectoraId: pet.protectoraId,
-    fotos: pet.fotos,
+    id: selectedPet?.id,
+    nombre: selectedPet?.nombre,
+    tipoAnimal: selectedPet?.tipoAnimal,
+    raza: selectedPet?.raza,
+    descripcion: selectedPet?.descripcion ,
+    sexo: selectedPet?.sexo,
+    tamano: selectedPet?.tamano,
+    temperamentoConAnimales: selectedPet?.temperamentoConAnimales,
+    temperamentoConPersonas: selectedPet?.temperamentoConPersonas,
+    edad: selectedPet?.edad,
+    estado: selectedPet?.estado,
+    ciudad: selectedPet?.ciudad,
+    mesAnioNacimiento: selectedPet?.mesAnioNacimiento,
+    protectoraId: selectedPet?.protectoraId,
+    fotos: selectedPet?.fotos,
   }
 
   const pickImage = async (setFieldValue) => {
@@ -153,7 +153,6 @@ const EditPett = () => {
         <Text style={styles.label}>Editar Mascota</Text>
         <Formik
           initialValues={initialState}
-          validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values);
             setSubmitting(false);
