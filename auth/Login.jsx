@@ -100,7 +100,7 @@ const Login = () => {
                     onChangeText={handleChange("password")}
                     onBlur={handleBlur("password")}
                   />
-                  <TouchableOpacity onPress={togglePasswordVisibility}>
+                  <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
                     <Image
                       source={passwordVisible ? eye : notVisible}
                       style={styles.icon}
