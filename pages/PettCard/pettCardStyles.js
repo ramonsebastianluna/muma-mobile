@@ -58,6 +58,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#5F5B5B',
   },
+  iconContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 15,
+    padding: 5,
+  },
+  iconCard: {
+    width: 30,
+    height: 30,
+  },
 });
 
 export default styles;
