@@ -44,14 +44,22 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPets, setFilteredPets] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
-
+  const [noResultsMessage, setNoResultsMessage] = useState("");
+  
   /**Logica del buscador */
   const handleSearch = () => {
-    const filtered =petsAvailable.filter((pet) =>
-      pet.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = petsAvailable.filter((pet) =>
+      (pet.nombre && pet.nombre.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (pet.sexo && pet.sexo.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (pet.estado && pet.estado.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (pet.protectora && pet.protectora.toLowerCase().includes(searchQuery.toLowerCase()))
     );
+    
     setFilteredPets(filtered);
+    setNoResultsMessage(filtered.length === 0 ? "No se encontraron resultados" : "");
   };
+
+
 
   /** */
   const handleTypeFilter = (type) => {
@@ -136,7 +144,13 @@ const Home = () => {
 
         <View>
           <Text style={styles.sectionTitle}>Animales</Text>
-            {filteredPets.length > 0 ? (
+          <Text style={styles.sectionTitle}>Animales</Text>
+          {noResultsMessage ? (
+            <Text style={{ textAlign: "center", color: "#888", marginVertical: 10 }}>
+              {noResultsMessage}
+            </Text>
+          ):
+            filteredPets.length > 0 ? (
               <ScrollView horizontal>
                 {filteredPets.map((pet) => (
                   <PetCard 
