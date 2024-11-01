@@ -137,7 +137,7 @@ const PetterRegister = () => {
                       onBlur={handleBlur('password')}
                       value={values.password}
                     />
-                    <TouchableOpacity onPress={togglePasswordVisibility}>
+                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
                       <Image source={passwordVisible ? eye : hidden} style={styles.icon} />
                     </TouchableOpacity>
                   </View>
@@ -153,7 +153,7 @@ const PetterRegister = () => {
                       onBlur={handleBlur('confirmPassword')}
                       value={values.confirmPassword}
                     />
-                    <TouchableOpacity onPress={toggleConfPasswordVisibility}>
+                    <TouchableOpacity onPress={toggleConfPasswordVisibility} style={styles.iconContainer}>
                       <Image source={confPasswordVisible ? eye : hidden} style={styles.icon} />
                     </TouchableOpacity>
                   </View>

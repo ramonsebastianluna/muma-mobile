@@ -52,14 +52,17 @@ const styles = StyleSheet.create({
   passwordContainer: {
     position: 'relative', 
   },
-  icon: {
-    position: 'absolute',
+  iconContainer: {
+    position: "absolute",
     right: 10,
-    top: '50%',
+    width: 27,
+    height: 20,
+    top: '100%',
     transform: [{ translateY: -50 }],
-    width: 24,
-    height: 24,
-    cursor: 'pointer',
+  },
+  icon: {
+    width: 27,
+    height: 20,
   },
 
   forgotPassword: {
