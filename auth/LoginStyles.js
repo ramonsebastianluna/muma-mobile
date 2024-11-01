@@ -46,12 +46,17 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
+    position: "relative",
   },
-
+  iconContainer: {
+    position: "absolute",
+    right: 10,
+    width: 27,
+    height: 20,
+  },
   icon: {
-    width: 24,
-    height: 24,
-    marginLeft: 10,
+    width: 27,
+    height: 20,
   },
 
   actions: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Image, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useNavigation } from "@react-navigation/native"; 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -89,85 +89,93 @@ const PetterRegister = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
-      <View style={styles.container_input}>
-            <Formik
-              initialValues={{ name: "", lastName: "", email: "", password: "", confirmPassword: "" }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-                <View>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Nombre*"
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                  />
-                  {touched.name && errors.name && 
-                  <Text style={styles.error}>{errors.name}</Text>}
-
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Apellido*"
-                    onChangeText={handleChange('lastName')}
-                    onBlur={handleBlur('lastName')}
-                    value={values.lastName}
-                  />
-                  {touched.lastName && errors.lastName && <Text style={styles.error}>{errors.lastName}</Text>}
-
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Email*"
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                  />
-                  {touched.email && errors.email && 
-                  <Text style={styles.error}>{errors.email}</Text>}
-
-                  <View style={styles.passwordContainer}>
+    <ScrollView>
+      <View style={styles.container}>
+        <Image source={logo} style={styles.logo} />
+        <View style={styles.container_input}>
+              <Formik
+                initialValues={{ name: "", lastName: "", email: "", password: "", confirmPassword: "" }}
+                validationSchema={validationSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                  handleSubmit(values);
+                  setSubmitting(true);
+                }}
+              >
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
+                  <View>
                     <TextInput
                       style={styles.input}
-                      placeholder="Contraseña*"
-                      secureTextEntry={!passwordVisible}
-                      onChangeText={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      value={values.password}
+                      placeholder="Nombre*"
+                      onChangeText={handleChange('name')}
+                      onBlur={handleBlur('name')}
+                      value={values.name}
                     />
-                    <TouchableOpacity onPress={togglePasswordVisibility}>
-                      <Image source={passwordVisible ? eye : hidden} style={styles.icon} />
-                    </TouchableOpacity>
-                  </View>
-                  {touched.password && errors.password &&
-                  <Text style={styles.error}>{errors.password}</Text>}
+                    {touched.name && errors.name && 
+                    <Text style={styles.error}>{errors.name}</Text>}
 
-                  <View style={styles.passwordContainer}>
                     <TextInput
                       style={styles.input}
-                      placeholder="Confirmar Contraseña*"
-                      secureTextEntry={!confPasswordVisible}
-                      onChangeText={handleChange('confirmPassword')}
-                      onBlur={handleBlur('confirmPassword')}
-                      value={values.confirmPassword}
+                      placeholder="Apellido*"
+                      onChangeText={handleChange('lastName')}
+                      onBlur={handleBlur('lastName')}
+                      value={values.lastName}
                     />
-                    <TouchableOpacity onPress={toggleConfPasswordVisibility}>
-                      <Image source={confPasswordVisible ? eye : hidden} style={styles.icon} />
+                    {touched.lastName && errors.lastName && <Text style={styles.error}>{errors.lastName}</Text>}
+
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Email*"
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                    />
+                    {touched.email && errors.email && 
+                    <Text style={styles.error}>{errors.email}</Text>}
+
+                    <View style={styles.passwordContainer}>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Contraseña*"
+                        secureTextEntry={!passwordVisible}
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        value={values.password}
+                      />
+                      <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
+                        <Image source={passwordVisible ? eye : hidden} style={styles.icon} />
+                      </TouchableOpacity>
+                    </View>
+                    {touched.password && errors.password &&
+                    <Text style={styles.error}>{errors.password}</Text>}
+
+                    <View style={styles.passwordContainer}>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Confirmar Contraseña*"
+                        secureTextEntry={!confPasswordVisible}
+                        onChangeText={handleChange('confirmPassword')}
+                        onBlur={handleBlur('confirmPassword')}
+                        value={values.confirmPassword}
+                      />
+                      <TouchableOpacity onPress={toggleConfPasswordVisibility} style={styles.iconContainer}>
+                        <Image source={confPasswordVisible ? eye : hidden} style={styles.icon} />
+                      </TouchableOpacity>
+                    </View>
+                    {touched.confirmPassword && errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword}</Text>}
+
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                      {isSubmitting ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                      ) : (
+                        <Text style={styles.buttonText}>Registrarme</Text>
+                      )}
                     </TouchableOpacity>
                   </View>
-                  {touched.confirmPassword && errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword}</Text>}
-
-                  <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                    <Text style={styles.buttonText}>Registrarme</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+        </View>
       </View>
-     
-    </View>
+    </ScrollView>
 
   );
 };

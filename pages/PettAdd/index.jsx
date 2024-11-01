@@ -7,7 +7,7 @@ import { RadioButton } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { Formik } from "formik";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import validationSchema from "./validationShcema";
@@ -90,8 +90,6 @@ const PettAdd = () => {
   
   
   const handleSubmit = async (values) => {
-    setSubiendo(true);
-
     const formatMesAnio = (fecha) => {
       const date = new Date(fecha);
       const year = date.getFullYear();
@@ -117,8 +115,6 @@ const PettAdd = () => {
       navigation.navigate('Home');
     } catch (error) {
       console.error("Error al agregar animal:", error);
-    } finally {
-      setSubiendo(false);
     }
   };
 
@@ -131,7 +127,7 @@ const PettAdd = () => {
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values);
-            setSubmitting(false);
+            setSubmitting(true);
           }}
         >
 
@@ -333,7 +329,11 @@ const PettAdd = () => {
                 style={styles.button}
                 disabled={isSubmitting}>
                 <Text style={styles.buttonText}>
-                  {subiendo ? "Subiendo imágenes..." : "Agregar Animal"}
+                  {isSubmitting ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <Text style={styles.buttonText}>Agregar animal</Text>
+                  )}
                 </Text>
               </TouchableOpacity>
             </View>

@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 80,
     left: width * 0.3, 
-    transform: [{ translateX: -width * 0.35 }, { rotate: "-30deg" }], 
+    transform: [{ translateX: -width * 0.35 }, { rotate: "-30deg" }],
+    zIndex: -1,
   },
   imgArriba: {
     width: 100,
