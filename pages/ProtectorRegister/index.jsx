@@ -136,7 +136,7 @@ const ProtectorRegister = () => {
                       onChangeText={handleChange('password')}
                       onBlur={handleBlur('password')}
                     />
-                    <TouchableOpacity onPress={togglePasswordVisibility}>
+                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
                       <Image source={passwordVisible ? eye : hidden} style={styles.icon} />
                     </TouchableOpacity>
                   </View>
@@ -153,7 +153,7 @@ const ProtectorRegister = () => {
                       onChangeText={handleChange('confirmPassword')}
                       onBlur={handleBlur('confirmPassword')}
                     />
-                    <TouchableOpacity onPress={toggleConfPasswordVisibility}>
+                    <TouchableOpacity onPress={toggleConfPasswordVisibility} style={styles.iconContainer}>
                       <Image source={confPasswordVisible ? eye : hidden} style={styles.icon} />
                     </TouchableOpacity>
                   </View>
