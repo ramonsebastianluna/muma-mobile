@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TextInput, Image, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 //import * as Yup from 'yup';
 import validationSchema from "./validationSchema";
@@ -79,7 +79,7 @@ const ProtectorRegister = () => {
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting }) => {
                 handleSubmit(values);
-                setSubmitting(false);
+                setSubmitting(true);
               }}
             >
               {({
@@ -172,8 +172,9 @@ const ProtectorRegister = () => {
                       ))}
                     </Picker>
                   </View>
-                  {touched.tamano && errors.tamano && 
-                  <Text style={styles.error}>{errors.tamano}</Text>}
+                  {touched.city && errors.city && (
+                    <Text style={styles.error}>{errors.city}</Text>
+                  )}
                 
                   <TextInput
                     style={styles.input}
@@ -230,8 +231,13 @@ const ProtectorRegister = () => {
                     onPress={handleSubmit}
                     disabled={isSubmitting}
                   >
-                    <Text style={styles.buttonText}>Registrarme</Text>
+                    {isSubmitting ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                      <Text style={styles.buttonText}>Registrarme</Text>
+                    )}
                   </TouchableOpacity>
+                  
                 </View>
               )}
             </Formik>
