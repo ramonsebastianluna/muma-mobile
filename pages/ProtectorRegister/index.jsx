@@ -93,8 +93,12 @@ const ProtectorRegister = () => {
                 isSubmitting,
               }) => (
               <View style={styles.containerInput}>
+                <View style={styles.inputGroup}>
                   <TextInput
-                    style={styles.input}
+                    style={[
+                        styles.input,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}
                     placeholder="Nombre Protectora*"
                     value={values.nameProtector}
                     onChangeText={handleChange('nameProtector')}
@@ -103,9 +107,14 @@ const ProtectorRegister = () => {
                   {errors.nameProtector && touched.nameProtector && (
                     <Text style={styles.error}>{errors.nameProtector}</Text>
                   )}
+                </View>
 
+                <View style={styles.inputGroup}>
                   <TextInput
-                    style={styles.input}
+                    style={[
+                        styles.input,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}
                     placeholder="Descripción*"
                     value={values.description}
                     onChangeText={handleChange('description')}
@@ -114,9 +123,14 @@ const ProtectorRegister = () => {
                   {errors.description && touched.description && (
                     <Text style={styles.error}>{errors.description}</Text>
                   )}
+                </View>
 
+                <View style={styles.inputGroup}>
                   <TextInput
-                    style={styles.input}
+                    style={[
+                        styles.input,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}
                     placeholder="Email*"
                     keyboardType="email-address"
                     value={values.email}
@@ -126,10 +140,15 @@ const ProtectorRegister = () => {
                   {errors.email && touched.email && (
                     <Text style={styles.error}>{errors.email}</Text>
                   )}
+                </View>
 
+                <View style={styles.inputGroup}>
                   <View style={styles.passwordContainer}>
                     <TextInput
-                      style={styles.input}
+                      style={[
+                        styles.input,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}
                       placeholder="Contraseña*"
                       secureTextEntry={!passwordVisible}
                       value={values.password}
@@ -143,10 +162,15 @@ const ProtectorRegister = () => {
                   {errors.password && touched.password && (
                     <Text style={styles.error}>{errors.password}</Text>
                   )}
-
+                </View>
+                
+                <View style={styles.inputGroup}>
                   <View style={styles.passwordContainer}>
                     <TextInput
-                      style={styles.input}
+                      style={[
+                        styles.input,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}
                       placeholder="Confirmar Contraseña*"
                       secureTextEntry={!confPasswordVisible}
                       value={values.confirmPassword}
@@ -160,8 +184,13 @@ const ProtectorRegister = () => {
                   {errors.confirmPassword && touched.confirmPassword && (
                     <Text style={styles.error}>{errors.confirmPassword}</Text>
                   )}
+                </View>
 
-                  <View style={styles.input}>
+                <View style={styles.inputGroup}>
+                  <View style={[
+                        styles.select,
+                        touched.password && errors.password ? styles.inputError : null,
+                      ]}>
                     <Picker
                       selectedValue={values.city}
                       onValueChange={(itemValue) => setFieldValue('city', itemValue)}
@@ -175,7 +204,9 @@ const ProtectorRegister = () => {
                   {touched.city && errors.city && (
                     <Text style={styles.error}>{errors.city}</Text>
                   )}
+                </View>
                 
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Calle"
@@ -183,6 +214,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('street')}
                     onBlur={handleBlur('street')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Número"
@@ -190,6 +224,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('number')}
                     onBlur={handleBlur('number')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Piso"
@@ -197,6 +234,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('floor')}
                     onBlur={handleBlur('floor')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Departamento"
@@ -204,6 +244,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('apartment')}
                     onBlur={handleBlur('apartment')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Sitio Web"
@@ -211,6 +254,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('webSite')}
                     onBlur={handleBlur('webSite')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Instagram"
@@ -218,6 +264,9 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('instagram')}
                     onBlur={handleBlur('instagram')}
                   />
+                </View>
+
+                <View style={styles.inputGroup}>
                   <TextInput
                     style={styles.input}
                     placeholder="Facebook"
@@ -225,20 +274,21 @@ const ProtectorRegister = () => {
                     onChangeText={handleChange('facebook')}
                     onBlur={handleBlur('facebook')}
                   />
-
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleSubmit}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                      <Text style={styles.buttonText}>Registrarme</Text>
-                    )}
-                  </TouchableOpacity>
-                  
                 </View>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSubmit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <Text style={styles.buttonText}>Registrarme</Text>
+                  )}
+                </TouchableOpacity>
+                  
+              </View>
               )}
             </Formik>
           

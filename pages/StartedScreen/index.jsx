@@ -1,6 +1,6 @@
 import Constants from 'expo-constants';
 import { useState } from 'react';
-import { View, ScrollView, Dimensions, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, ScrollView, Dimensions, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import dotActive from '../../assets/started-screen/dots/dot01.png';
 import dotNoActive from '../../assets/started-screen/dots/dot02.png';
 import image01 from '../../assets/started-screen/image01.png';
@@ -9,15 +9,17 @@ import image02 from '../../assets/started-screen/image02.png';
 const { width } = Dimensions.get('window');
 
 const data = [
-  { id: 1,
+  { 
+    id: 1,
     uri: image01,
-    title: "Se parte del equipo",
-    text: "Ayudalos a volver a casa difundiendo informaciíon y colaborando con las protectoras para encontrarles un hogar.",
+    title: "Sé parte del equipo",
+    text: "Ayúdalos a volver a casa difundiendo información y colaborando con las protectoras para encontrarles un hogar.",
   },
-  { id: 2,
+  { 
+    id: 2,
     uri: image02,
-    title: "Encontrá tu mejor amigo",
-    text: "Si estas pensando en sumar un integrante más a tu familia ¿Por que no adoptando?",
+    title: "Encuentra a tu mejor amigo",
+    text: "Si estás pensando en sumar un integrante más a tu familia, ¿por qué no adoptando?",
   },
 ];
 
@@ -30,69 +32,76 @@ const StartedScreen = ({ navigation }) => {
     setActiveIndex(index);
   };
 
+  const handleSkip = () => {
+    if (activeIndex === data.length - 1) {
+      navigation.navigate('Login');
+    } else {
+      setActiveIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
         <ScrollView
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            style={styles.scrollView}
-          >
-            {data.map((item) => (
-              <View key={item.id} style={styles.item}>
-                <Image source={ item.uri } style={styles.image} />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.text}>
-                  {item.text}
-                </Text>
-              </View>
-            ))}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          style={styles.scrollView}
+        >
+          {data.map((item) => (
+            <View key={item.id} style={styles.item}>
+              <Image source={item.uri} style={styles.image} resizeMode="contain" />
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          ))}
         </ScrollView>
+
+        {/* Paginación de puntos */}
         <View style={styles.pagination}>
           {data.map((_, index) => (
-            <View
+            <Image
               key={index}
-              style={[
-                styles.paginationDot,
-                index === activeIndex ? styles.activeDot : null,
-              ]}
+              source={index === activeIndex ? dotActive : dotNoActive}
+              style={styles.paginationDot}
             />
           ))}
         </View>
       </View>
+
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.btnSm} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.btnText}>Iniciar Sesion</Text>
+          <Text style={styles.btnText}>Iniciar Sesión</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnSm} onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity style={styles.btnSm} onPress={handleSkip}>
           <Text style={styles.btnText}>Omitir</Text>
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default StartedScreen
+export default StartedScreen;
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    height: '90%',
+    marginTop: 80,
   },
   slider: {
-    display: 'flex',
-    width: '80%',
+    width: width, // Ocupa todo el ancho de la pantalla
     height: '75%',
   },
   scrollView: {
     width: '100%',
   },
   item: {
-    width: 350,
+    width: width, // Ancho igual al de la pantalla para que ocupe un slide completo
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -101,12 +110,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 12,
-    marginLeft: 0,
-    marginRight: 0,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   text: {
     textAlign: 'center',
-    marginBottom: 10,
+    marginHorizontal: 20,
+    fontSize: 16,
+    color: '#666',
   },
   pagination: {
     flexDirection: 'row',
@@ -118,11 +129,7 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 5,
-    backgroundColor: '#ccc',
     margin: 5,
-  },
-  activeDot: {
-    backgroundColor: '#000',
   },
   buttons: {
     width: '80%',
@@ -130,22 +137,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 250,
-    height: 393,
+    width: '100%',
+    height: '70%', // Ajusta el alto de la imagen
   },
-  btnSm : {
-    fontSize: 14,
-    paddingTop: 13.5,
-    paddingBottom: 13.5,
+  btnSm: {
+    paddingVertical: 13.5,
     width: 198,
     borderRadius: 8,
     backgroundColor: '#F08318',
-    border: 'none',
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
+    alignItems: 'center',
   },
-  btnText : {
-    textAlign: 'center',
+  btnText: {
     color: '#FFFFFF',
+    fontSize: 16,
   },
 });

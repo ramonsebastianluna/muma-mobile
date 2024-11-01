@@ -33,7 +33,14 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     borderRadius: 8,
-    marginBottom: 15,
+  },
+  select: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: '#F6F6F6',
+    color: '#ddd',
+    padding: 0,
+    borderRadius: 8,
   },
   passwordContainer: {
     position: 'relative',
@@ -43,7 +50,7 @@ const styles = StyleSheet.create({
     width: 30,
     width: 27,
     height: 25,
-    top: '100%',
+    top: '130%',
     right: 10,
     transform: [{ translateY: -50 }],
   },
@@ -55,7 +62,16 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     fontSize: 12,
-    marginBottom: 20,
+  },
+  inputGroup: {
+    marginBottom: 15,
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
   },
 });
 
